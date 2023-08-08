@@ -6,9 +6,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/datahattrick/tapp/internal/http"
-	"github.com/datahattrick/tapp/internal/logger"
-	"github.com/datahattrick/tapp/internal/utils"
+	"github.com/datahattrick/twistyapps/internal/http"
+	"github.com/datahattrick/twistyapps/internal/logger"
+	"github.com/datahattrick/twistyapps/internal/utils"
 )
 
 // @title			Plusone Someone API

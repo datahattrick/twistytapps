@@ -1,6 +1,6 @@
 package users
 
-import "github.com/datahattrick/tapp/internal/groups"
+import "github.com/datahattrick/twistyapps/internal/groups"
 
 type User struct {
 	Id        string         `json:"id,omitempty"`

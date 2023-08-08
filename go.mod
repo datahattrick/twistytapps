@@ -1,4 +1,4 @@
-module github.com/datahattrick/tapp
+module github.com/datahattrick/twistyapps
 
 go 1.20
 

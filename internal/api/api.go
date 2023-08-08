@@ -1,9 +1,9 @@
 package api
 
 import (
-	"github.com/datahattrick/tapp/internal/authors"
-	"github.com/datahattrick/tapp/internal/tasks"
-	"github.com/datahattrick/tapp/internal/users"
+	"github.com/datahattrick/twistyapps/internal/authors"
+	"github.com/datahattrick/twistyapps/internal/tasks"
+	"github.com/datahattrick/twistyapps/internal/users"
 	"github.com/gofiber/fiber/v2"
 )
 

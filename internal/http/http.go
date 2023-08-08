@@ -3,8 +3,8 @@ package http
 import (
 	"log"
 
-	"github.com/datahattrick/tapp/internal/api"
-	"github.com/datahattrick/tapp/internal/utils"
+	"github.com/datahattrick/twistyapps/internal/api"
+	"github.com/datahattrick/twistyapps/internal/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
