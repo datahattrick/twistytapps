@@ -30,8 +30,10 @@ CREATE TABLE Tasks (
     type TEXT,
     status TEXT,
     class_id TEXT,
+    user TEXT,
     FOREIGN KEY (class_id) REFERENCES Class(id)
     FOREIGN KEY (type) REFERENCES TasksType(id)
+    FOREIGN KEY (user) REFERENCES Users(id)
 );
 
 -- +goose Down
