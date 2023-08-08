@@ -38,10 +38,12 @@ CREATE TABLE Tasks (
     class_id TEXT,
     user TEXT,
     author TEXT,
+    epic TEXT,
     FOREIGN KEY (class_id) REFERENCES Class(id),
     FOREIGN KEY (type) REFERENCES TasksType(id),
     FOREIGN KEY (user) REFERENCES Users(id),
-    FOREIGN KEY (author) REFERENCES Authors(id)
+    FOREIGN KEY (author) REFERENCES Authors(id),
+    FOREIGN KEY (epic) REFERENCES Epics(id)
 );
 
 -- +goose Down
