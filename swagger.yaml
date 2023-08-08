@@ -1,0 +1,934 @@
+openapi: 3.0.3
+info:
+  title: TWISTYtasks
+  description: |-
+    Welcome to TWISTYtasks your home for everything tasks related. For more information, please visit our home at [https://insertname.here](https://insertname.here).
+
+    You can help us improve our API and Application by submitting feature requests at [https://insertticketsite.here](https://insertticketsite.here).
+
+    For any issues or bugs please help us by providing a ticket here at [https://insertticketsite.here](https://insertticketsite.here)
+  contact:
+    email: insertemail@here.com
+  version: 1.0.0
+servers:
+- url: https://tasks.domain/api/v1
+- url: https://localhost:8000/api/v1
+tags:
+- name: user
+  description: Everything about users
+  externalDocs:
+    description: Find out more about users
+    url: http://insertname.here/apidocs
+- name: authors
+  description: Access to users authors
+  externalDocs:
+    description: Find out more about authors
+    url: http://insertname.here/apidocs
+- name: tasks
+  description: Access to users tasks
+  externalDocs:
+    description: Find out more about tasks
+    url: http://insertname.here/apidocs
+paths:
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/createWithList:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      description: Creates list of users with given input array
+      operationId: createUsersWithListInput
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: successful operation
+  /user/login:
+    get:
+      tags:
+      - user
+      summary: Logs user into the system
+      description: ""
+      operationId: loginUser
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              style: simple
+              explode: false
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              style: simple
+              explode: false
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+                x-content-type: application/xml
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      description: ""
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      description: ""
+      operationId: getUserByName
+      parameters:
+      - name: username
+        in: path
+        description: 'The name that needs to be fetched. Use user1 for testing. '
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+    put:
+      tags:
+      - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Update an existent user in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+  /tasks:
+    put:
+      tags:
+      - tasks
+      summary: Update an existing tasks
+      description: Update an existing tasks by Id
+      operationId: updateTasks
+      requestBody:
+        description: Update an existent tasks in the tasks
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: tasks not found
+        "405":
+          description: Validation exception
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+    post:
+      tags:
+      - tasks
+      summary: Add a new tasks to the store
+      description: Add a new tasks to the store
+      operationId: addTasks
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+        "405":
+          description: Invalid input
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+  /tasks/findByStatus:
+    get:
+      tags:
+      - tasks
+      summary: Finds Tasks by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findTasksByStatus
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: available
+          enum:
+          - available
+          - pending
+          - sold
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tasks'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tasks'
+        "400":
+          description: Invalid status value
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+  /tasks/findByAuthors:
+    get:
+      tags:
+      - tasks
+      summary: Finds tasks by authors
+      description: Multiple authors can be provided with comma separated strings.
+      operationId: findTasksByAuthors
+      parameters:
+      - name: authors
+        in: query
+        description: authors to filter by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tasks'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tasks'
+        "400":
+          description: Invalid author
+      security:
+      - tapps_auth:
+        - write:tapps
+        - read:tapps
+  /tasks/{taskId}:
+    get:
+      tags:
+      - tasks
+      summary: Find Tasks by ID
+      description: Returns a single Task
+      operationId: getTaskById
+      parameters:
+      - name: taskId
+        in: path
+        description: ID of task to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Task not found
+      security:
+      - api_key: []
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+    delete:
+      tags:
+      - tasks
+      summary: Archives a task
+      description: Archives a task from the app
+      operationId: archiveTask
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        description: Task id to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "400":
+          description: Invalid task value
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+  /authors/{authorId}:
+    get:
+      tags:
+      - authors
+      summary: Get an author
+      description: Gets a author by id
+      operationId: getAuthorById
+      parameters:
+      - name: authorId
+        in: path
+        description: ID of author to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Author'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Author not found
+      security:
+      - api_key: []
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+    delete:
+      tags:
+      - authors
+      summary: Archives a task
+      description: Archives a task from the app
+      operationId: archiveAuthor
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: authorId
+        in: path
+        description: Author id to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "400":
+          description: Invalid task value
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+  /authors/findByTasks:
+    get:
+      tags:
+      - authors
+      summary: Finds tasks by authors
+      description: Multiple authors can be provided with comma separated strings.
+      operationId: findAuthorsByTask
+      parameters:
+      - name: Tasks
+        in: query
+        description: Tasks to filter by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        "400":
+          description: Invalid author
+      security:
+      - tapps_auth:
+        - write:tapps
+        - read:tapps
+  /authors/findByStatus:
+    get:
+      tags:
+      - authors
+      summary: Finds Author by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findAuthorByStatus
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: available
+          enum:
+          - available
+          - pending
+          - sold
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        "400":
+          description: Invalid status value
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+  /authors:
+    put:
+      tags:
+      - authors
+      summary: Update an existing author
+      description: Update an existing author by Id
+      operationId: updateAuthor
+      requestBody:
+        description: Update an existent Author
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Author'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Author'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Author'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Author not found
+        "405":
+          description: Validation exception
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+    post:
+      tags:
+      - authors
+      summary: Add a new Author to tapps
+      description: Add a new author to tapps
+      operationId: addAuthor
+      requestBody:
+        description: Create a new author in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Author'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Author'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Author'
+        "405":
+          description: Invalid input
+      security:
+      - tapps_auth:
+        - write:tasks
+        - read:tasks
+components:
+  schemas:
+    User:
+      required:
+      - email
+      - firstName
+      - groups
+      - lastName
+      - username
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+      example:
+        firstName: John
+        lastName: James
+        groups:
+        - name: foobar
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+        - name: foobar
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+        email: john@email.com
+        username: theUser
+      xml:
+        name: user
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        name:
+          type: string
+          format: string
+          example: foobar
+      example:
+        name: foobar
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+      xml:
+        name: group
+    Tasks:
+      required:
+      - class
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        name:
+          type: string
+          example: bobstasks
+        type:
+          $ref: '#/components/schemas/Tasks_type'
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+          - available
+          - pending
+          - sold
+        class:
+          $ref: '#/components/schemas/Class'
+      example:
+        name: bobstasks
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+        type:
+          capp:
+            name: bobsCapp
+            id: 18197587-ad90-481f-9acf-3fdc375c052e
+          mapp:
+            name: bobsCapp
+            id: 18197587-ad90-481f-9acf-3fdc375c052e
+        class:
+          rating: bobsCapp
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+          caveat: bobsCaveat
+          relative:
+          - near
+          - near
+        status: available
+      xml:
+        name: tasks
+    Mapp:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        name:
+          type: string
+          example: bobsCapp
+      example:
+        name: bobsCapp
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+      xml:
+        name: mapp
+    Capp:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        name:
+          type: string
+          example: bobsCapp
+      example:
+        name: bobsCapp
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+      xml:
+        name: capp
+    Author:
+      required:
+      - class
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        name:
+          type: string
+          example: bobsCapp
+        class:
+          $ref: '#/components/schemas/Class'
+      example:
+        name: bobsCapp
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+        class:
+          rating: bobsCapp
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+          caveat: bobsCaveat
+          relative:
+          - near
+          - near
+      xml:
+        name: author
+    Class:
+      required:
+      - rating
+      - relative
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 18197587-ad90-481f-9acf-3fdc375c052e
+        rating:
+          type: string
+          example: bobsCapp
+        caveat:
+          type: string
+          example: bobsCaveat
+        relative:
+          type: array
+          items:
+            type: string
+            example: near
+            enum:
+            - near
+            - far
+            - where
+            - ever
+            - you
+      example:
+        rating: bobsCapp
+        id: 18197587-ad90-481f-9acf-3fdc375c052e
+        caveat: bobsCaveat
+        relative:
+        - near
+        - near
+      xml:
+        name: mapp
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+    Tasks_type:
+      type: object
+      properties:
+        mapp:
+          $ref: '#/components/schemas/Mapp'
+        capp:
+          $ref: '#/components/schemas/Capp'
+      example:
+        capp:
+          name: bobsCapp
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+        mapp:
+          name: bobsCapp
+          id: 18197587-ad90-481f-9acf-3fdc375c052e
+  requestBodies:
+    tasks:
+      description: tasks object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tasks'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Tasks'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+  securitySchemes:
+    tapps_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:tasks: modify pets in your account
+            read:tasks: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
