@@ -24,16 +24,31 @@ CREATE TABLE Mapp (
     name TEXT NOT NULL
 );
 
+CREATE TABLE AuthorsToTasksRelation (
+  id UUID PRIMARY KEY,
+  author_id UUID NOT NULL,
+  task_id UUID NOT NULL
+);
+
+CREATE TABLE Authors (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL,
+  class_id UUID NOT NULL,
+  FOREIGN KEY (class_id) REFERENCES Class(id)
+);
+
 CREATE TABLE Tasks (
     id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     type TEXT,
     status TEXT,
     class_id TEXT,
-    user TEXT,
+    "user" TEXT,
+    author TEXT,
     FOREIGN KEY (class_id) REFERENCES Class(id),
     FOREIGN KEY (type) REFERENCES TasksType(id),
-    FOREIGN KEY (user) REFERENCES Users(id)
+    FOREIGN KEY ("user") REFERENCES Users(id),
+    FOREIGN KEY (author) REFERENCES Authors(id)
 );
 
 -- +goose Down

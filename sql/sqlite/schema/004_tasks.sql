@@ -24,6 +24,12 @@ CREATE TABLE Mapp (
     name TEXT NOT NULL
 );
 
+CREATE TABLE AuthorsToTasksRelation (
+  id TEXT PRIMARY KEY,
+  author_id TEXT NOT NULL,
+  task_id TEXT NOT NULL
+);
+
 CREATE TABLE Tasks (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
@@ -31,13 +37,18 @@ CREATE TABLE Tasks (
     status TEXT,
     class_id TEXT,
     user TEXT,
-    FOREIGN KEY (class_id) REFERENCES Class(id)
-    FOREIGN KEY (type) REFERENCES TasksType(id)
-    FOREIGN KEY (user) REFERENCES Users(id)
+    author TEXT,
+    FOREIGN KEY (class_id) REFERENCES Class(id),
+    FOREIGN KEY (type) REFERENCES TasksType(id),
+    FOREIGN KEY (user) REFERENCES Users(id),
+    FOREIGN KEY (author) REFERENCES Authors(id)
 );
 
 -- +goose Down
 DROP TABLE Tasks;
 DROP TABLE TasksType;
+DROP TABLE TaskMapp;
+DROP TABLE TaskCapp
 DROP TABLE Mapp;
 DROP TABLE Capp;
+DROP TABLE AuthorsToTasksRelation;

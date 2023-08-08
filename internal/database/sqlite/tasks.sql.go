@@ -47,9 +47,9 @@ func (q *Queries) CreateMappTask(ctx context.Context, arg CreateMappTaskParams) 
 }
 
 const createTask = `-- name: CreateTask :one
-INSERT INTO Tasks (id, name, type, status, class_id)
-VALUES (?1, ?2, ?3, ?4, ?5)
-RETURNING id, name, type, status, class_id, "foreign"
+INSERT INTO Tasks (id, name, type, status, class_id, user, author)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
+RETURNING id, name, type, status, class_id, user, author
 `
 
 type CreateTaskParams struct {
@@ -58,6 +58,8 @@ type CreateTaskParams struct {
 	Type    sql.NullString
 	Status  sql.NullString
 	ClassID sql.NullString
+	User    sql.NullString
+	Author  sql.NullString
 }
 
 func (q *Queries) CreateTask(ctx context.Context, arg CreateTaskParams) (Task, error) {
@@ -67,6 +69,8 @@ func (q *Queries) CreateTask(ctx context.Context, arg CreateTaskParams) (Task, e
 		arg.Type,
 		arg.Status,
 		arg.ClassID,
+		arg.User,
+		arg.Author,
 	)
 	var i Task
 	err := row.Scan(
@@ -75,7 +79,8 @@ func (q *Queries) CreateTask(ctx context.Context, arg CreateTaskParams) (Task, e
 		&i.Type,
 		&i.Status,
 		&i.ClassID,
-		&i.Foreign,
+		&i.User,
+		&i.Author,
 	)
 	return i, err
 }

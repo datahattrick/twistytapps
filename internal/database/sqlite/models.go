@@ -9,6 +9,25 @@ import (
 	"time"
 )
 
+type Author struct {
+	ID      string
+	Name    string
+	ClassID string
+	BookID  string
+}
+
+type AuthorsToTasksRelation struct {
+	ID       string
+	AuthorID string
+	TaskID   string
+}
+
+type Book struct {
+	ID      string
+	Name    string
+	ClassID string
+}
+
 type Capp struct {
 	ID   string
 	Name string
@@ -42,7 +61,8 @@ type Task struct {
 	Type    sql.NullString
 	Status  sql.NullString
 	ClassID sql.NullString
-	Foreign interface{}
+	User    sql.NullString
+	Author  sql.NullString
 }
 
 type TaskCapp struct {

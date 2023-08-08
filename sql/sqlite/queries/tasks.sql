@@ -1,6 +1,6 @@
 -- name: CreateTask :one
-INSERT INTO Tasks (id, name, type, status, class_id)
-VALUES (?1, ?2, ?3, ?4, ?5)
+INSERT INTO Tasks (id, name, type, status, class_id, user, author)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
 RETURNING *;
 
 -- name: RelateMappTask :exec

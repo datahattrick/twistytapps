@@ -11,6 +11,18 @@ import (
 	"github.com/google/uuid"
 )
 
+type Author struct {
+	ID      uuid.UUID
+	Name    string
+	ClassID uuid.UUID
+}
+
+type Authorstotasksrelation struct {
+	ID       uuid.UUID
+	AuthorID uuid.UUID
+	TaskID   uuid.UUID
+}
+
 type Capp struct {
 	ID   uuid.UUID
 	Name string
@@ -39,6 +51,8 @@ type Task struct {
 	Type    sql.NullString
 	Status  sql.NullString
 	ClassID sql.NullString
+	User    sql.NullString
+	Author  sql.NullString
 }
 
 type Taskcapp struct {
