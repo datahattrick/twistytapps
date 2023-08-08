@@ -4,7 +4,8 @@ CREATE TABLE Class (
   id TEXT PRIMARY KEY,
   rating TEXT NOT NULL UNIQUE,
   caveat TEXT NOT NULL UNIQUE,
-  relative TEXT NOT NULL UNIQUE
+  relative TEXT NOT NULL UNIQUE,
+  FOREIGN KEY (relative) REFERENCES Relative(id)
 );
 
 CREATE TABLE Groups (
