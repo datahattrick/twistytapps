@@ -1,0 +1,14 @@
+version: 2
+sql:
+  - engine: "sqlite"
+    schema: "sql/sqlite/schema"
+    queries: "sql/sqlite/queries"
+    gen:
+      go:
+        out: "internal/database/sqlite"
+  - engine: "postgresql"
+    schema: "sql/postgresql/schema"
+    queries: "sql/postgresql/queries"
+    gen:
+      go:
+        out: "internal/database/psql"

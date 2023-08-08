@@ -12,7 +12,7 @@ func CreateV1Routes(app fiber.Router) {
 	v1 := app.Group("/v1")
 
 	v1.Get("/healthy", func(c *fiber.Ctx) error {
-		return c.SendString("I'm a GET request!")
+		return c.SendString("Healthy")
 	})
 
 	userRouter(v1)

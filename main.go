@@ -11,13 +11,16 @@ import (
 	"github.com/datahattrick/twistyapps/internal/utils"
 )
 
-// @title			Plusone Someone API
+// @title			twistytapps
 // @version		0.1
-// @description	A simple API to create a message and give someone a plusone.
+// @description	    Welcome to TWISTYtasks your home for everything tasks related. For more information, please visit our home at [https://insertname.here](https://insertname.here).
+// @description			You can help us improve our API and Application by submitting feature requests at [https://insertticketsite.here](https://insertticketsite.here).
+// @description	 		For any issues or bugs please help us by providing a ticket here at [https://insertticketsite.here](https://insertticketsite.here)
 //
 // @schemes		http https
 // @host			localhost:8000
-// @BasePath		/v1
+// @host			https://insertdomain.here/api/v1
+// @BasePath		/api/v1
 func main() {
 	l := logger.New("goapp", "v1.0.0", 1)
 	logger.UpdateDefaultLogger(l)
